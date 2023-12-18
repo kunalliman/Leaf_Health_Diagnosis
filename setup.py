@@ -19,7 +19,7 @@ def get_requirements(file_path:str)->List[str]:
 
 
 setup(
-    name='DL Leaf Health Diagnosis project',
+    name='Leaf Health Diagnosis project',
     version='0.0.1',
     author='Kunal',
     author_email='limakunal16@gmail.com',

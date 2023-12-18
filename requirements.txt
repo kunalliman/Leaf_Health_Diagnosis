@@ -3,4 +3,7 @@ uvicorn
 tensorflow
 numpy
 Pillow
--e .
+matplotlib
+scikit-learn
+split-folders
+# -e .
