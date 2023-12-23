@@ -36,6 +36,9 @@ class DataIngestion:
             raise CustomException(e,sys)
         
     def split_data(self):
+            '''
+                Splits data for Train, Test and validation into train,test and val folder respectively.
+            '''
             try:
                 logging.info(f"Splitting Data in train test and validation data for each plant folder in {self.organized_folder}.")
 
@@ -57,22 +60,30 @@ class DataIngestion:
 
 
 
-from src.components.data_augmentation import PlantDataGenerator      
+from src.components.data_augmentation import PlantDataGenerator
+from src.components.model_trainer import ModelTrainer 
+# from src.utils.ModelReporter import save_model
+from src.components.model_reporter import ModelReporter
 if __name__=="__main__":
     # Testing
-    data_ingestion = DataIngestion(data_folder='PlantVillage')
-    # data_ingestion.organize_folders()
-    data_ingestion.split_data()
-    # Creating generators for Pepper category
-    pepper_data_gen = PlantDataGenerator('DataSets/Pepper')
-    pepper_train_gen, pepper_val_gen, pepper_test_gen = pepper_data_gen.create_generators()
+    # data_ingestion = DataIngestion(data_folder='PlantVillage')
+    # data_ingestion.organize_folders() 
+    # data_ingestion.split_data()
 
-    # Creating generators for Potato category
-    potato_data_gen = PlantDataGenerator('DataSets/Potato')
-    potato_train_gen, potato_val_gen, potato_test_gen = potato_data_gen.create_generators()
+    plant_list = ["Pepper","Potato","Tomato"]
+    
+    for plant in plant_list:
+        data_augmentor = PlantDataGenerator(data_folder_path=f'DataSets/{plant}')
+        train_gen, val_gen, test_gen = data_augmentor.create_generators()
 
-    # Creating generators for Tomato category
-    tomato_data_gen = PlantDataGenerator('DataSets/Tomato')
-    tomato_train_gen, tomato_val_gen, tomato_test_gen = tomato_data_gen.create_generators()
+
+        trainer = ModelTrainer(train_gen, val_gen)
+        model_summary,training_configs,model,history = trainer.train_model()
+
+        reporter = ModelReporter(plant,train_gen,val_gen,test_gen,model_summary,training_configs,model,history)
+        reporter.report_info()
+        # history = trainer.train_model(model)
+
+    #     # print(model.summary())  # This will print the architecture config for the specified model
 
     

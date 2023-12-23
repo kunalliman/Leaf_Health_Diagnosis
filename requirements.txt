@@ -6,4 +6,5 @@ Pillow
 matplotlib
 scikit-learn
 split-folders
+PyYAML
 # -e .
