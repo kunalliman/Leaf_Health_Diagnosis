@@ -21,7 +21,7 @@ class ModelReporter:
         self.model = model
         self.history = history
 
-    def report_info(self):
+    def save_model_with_report(self):
         try:
             logging.info("Creating Directories for saving model and model report.")
             plant_folder = os.path.join(self.report_folder, self.plant_name)
@@ -80,26 +80,30 @@ class ModelReporter:
     def _cfm_report(self, generator, model):
         '''Returns a confusion matrix and a classification report
         '''
-        true_y = []
-        pred_y = []
-        class_names = list(generator.class_indices.keys())
-        for i in range(len(generator)):
-            batch = generator.next()
-            if len(class_names)==2:
-                true_classes = [np.argmax(y) for y in batch[1]]
-            else:true_classes = batch[1]
+        try:
+            true_y = []
+            pred_y = []
+            class_names = list(generator.class_indices.keys())
+            for i in range(len(generator)):
+                batch = generator.next()
+                if len(class_names)==2:
+                    true_classes = [np.argmax(y) for y in batch[1]]
+                else:true_classes = batch[1]
 
-            true_y.extend([class_names[int(label)] for label in true_classes])
+                true_y.extend([class_names[int(label)] for label in true_classes])
 
-            batch_predictions = model.predict(batch[0],verbose=False)
-            pred_classes = [np.argmax(pred) for pred in batch_predictions]
-            pred_y.extend([class_names[pred] for pred in pred_classes])
+                batch_predictions = model.predict(batch[0],verbose=False)
+                pred_classes = [np.argmax(pred) for pred in batch_predictions]
+                pred_y.extend([class_names[pred] for pred in pred_classes])
 
-            # Confusion Matrix and classification report
-            cfm = confusion_matrix(true_y,pred_y)  
-            report = classification_report(true_y, pred_y, target_names=class_names, zero_division=1)
+                # Confusion Matrix and classification report
+                cfm = confusion_matrix(true_y,pred_y)  
+                report = classification_report(true_y, pred_y, labels=class_names, zero_division=1)
 
-            return {"Confusion Matrix":cfm.tolist(), "Classification Report":report}
+                return {"Confusion Matrix":cfm.tolist(), "Classification Report":report}
+            
+        except Exception as e:
+            raise CustomException(e,sys)
 
       
     def plot_training_history(self,img_path,name_preffix):
@@ -126,21 +130,24 @@ class ModelReporter:
         plt.savefig(f"{img_path}/{name_preffix}-training-validation-accuracy-and-loss-over-epochs.jpg", dpi=300)
 
     def save_report_info_to_text(self,report_info_dict, file_path):
-        with open('test.txt', 'w') as file:
+        with open(file_path, 'w') as file:
             for key, value in report_info_dict.items():
                 file.write(f"{key}: ")
 
-                if isinstance(value, dict):
-                    file.write('\n')
-                    for sub_key, sub_value in value.items():
-                        file.write(f"  * {sub_key}: {sub_value}\n")
-                elif isinstance(value, list):
-                    file.write('\n')
-                    for elem in value:
-                        file.write(f"      {elem}\n")
-                else:
-                    file.write(f"\n{value}\n")
+                if 'Model Evaluation' in key:
+                    file.write(f"\n\nConfusion Matrix:\n")
+                    for row_num in range(len(report_info_dict[key]["Confusion Matrix"])): ## Loop Prints the confusion matrix
+                        file.write(f"{report_info_dict[key]['Confusion Matrix'][row_num]} {report_info_dict['Data Description']['Features'][row_num]}\n")
+                    file.write(f"\nClassification Report:\n")
+                    file.write(f"{report_info_dict[key]['Classification Report']}\n\n")
 
+                elif isinstance(value, dict):
+                    file.write('\n\n')
+                    for sub_key, sub_value in value.items():
+                        file.write(f"  * {sub_key}: {sub_value}\n\n")
+                    
+                else:
+                    file.write(f"\n{value}\n\n")
 
 
 

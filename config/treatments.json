@@ -1,0 +1,23 @@
+{
+  "Potato": {
+    "Early Blight": "Apply fungicide and remove infected leaves. Rotate crops regularly to prevent recurrence. Practice good sanitation in the garden.",
+    "Late Blight": "Use fungicide, increase ventilation, and avoid overhead watering. Remove infected plant parts promptly. Ensure proper drainage to prevent water accumulation.",
+    "Healthy": "No specific treatment needed, maintain regular care."
+  },
+  "Pepper": {
+    "Pepper bell Bacterial spot": "Use copper-based fungicides. Prune infected branches and destroy them.",
+    "Pepper bell healthy": "Maintain regular care and hygiene. Inspect plants regularly for signs of diseases."
+  },
+  "Tomato": {
+    "Tomato Bacterial spot": "Remove infected leaves and use copper fungicide. Apply organic sprays like neem oil.",
+    "Tomato Early blight": "Apply fungicides and remove infected plant parts. Mulch to prevent soil splashing.",
+    "Tomato Late blight": "Use copper fungicides and avoid overhead watering. Enhance air circulation by spacing plants properly.",
+    "Tomato Leaf Mold": "Improve air circulation and reduce humidity. Prune affected branches and increase sunlight exposure.",
+    "Tomato Septoria leaf spot": "Remove infected leaves, apply fungicides, and avoid overhead watering. Practice crop rotation to reduce disease pressure.",
+    "Tomato Spider mites Two spotted spider mite": "Use miticides and remove affected leaves. Introduce natural predators like ladybugs.",
+    "Tomato Target Spot": "Apply fungicides and remove infected plant parts. Avoid overhead irrigation to minimize moisture on leaves.",
+    "Tomato Tomato_YellowLeaf Curl Virus": "Control whiteflies and apply systemic insecticides. Use reflective mulch to deter whiteflies.",
+    "Tomato Tomato mosaic virus": "No cure. Remove infected plants to prevent spread. Practice strict sanitation to avoid transmission.",
+    "Tomato healthy": "Maintain regular care and hygiene. Promote soil health through organic amendments."
+  }
+}

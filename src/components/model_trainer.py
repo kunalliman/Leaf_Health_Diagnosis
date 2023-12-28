@@ -47,7 +47,7 @@ class ModelTrainer:
             logging.info('Model is compiled and ready to train.')
 
             batches_in_train, batches_in_val,EPOCHS, class_weights_dict = self._model_fit_params()
-            EPOCHS = 1
+            # EPOCHS = 1
             history = model.fit(
                             self.train_gen,
                             steps_per_epoch = batches_in_train,
@@ -64,7 +64,7 @@ class ModelTrainer:
             return model_summary,training_configs,model,history
         
         except Exception as e:
-            raise CustomException(e,sys)
+            raise e
 
     
     def _model_fit_params(self):

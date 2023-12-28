@@ -1,17 +1,17 @@
 {
     "Pepper": {
-        "rescale": "1./255",
+        "rescale": 0.00392156863,
         "rotation_range": 10,
-        "horizontal_flip": "True"
+        "horizontal_flip": 1 
     },
     "Potato": {
-        "rescale": "1./255",
+        "rescale": 0.00392156863,
         "rotation_range": 12,
-        "horizontal_flip": "True"
+        "horizontal_flip": 1
     },
     "Tomato": {
-        "rescale": "1./255",
+        "rescale": 0.00392156863,
         "rotation_range": 15,
-        "horizontal_flip": "True"
+        "horizontal_flip": 1
     }
 }

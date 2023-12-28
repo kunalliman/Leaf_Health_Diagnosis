@@ -17,19 +17,16 @@ class PlantDataGenerator:
     def create_generators(self):
         '''Returns Image data generator for Train Validation and Test '''
         try:
-            # logging.info(f"Reading data augmentation configs for {self.plant_category} generators...")
-            # with open('config/augment_config.json', 'r') as config_file:
-            #     config = json.load(config_file)
-            #     augment_config = config[self.plant_category] # Getting ImageDataGenerator config 
+            logging.info(f"Reading data augmentation configs for {self.plant_category} generators...")
+            with open('config/augment_config.json', 'r') as config_file:
+                config = json.load(config_file)
+                augment_config = config[self.plant_category] # Getting ImageDataGenerator config 
             logging.info(f"Cretaing Generators for {self.plant_category} category.")
-            datagen = ImageDataGenerator(rescale=1./255, rotation_range=10, horizontal_flip=True)
+            datagen = ImageDataGenerator(**augment_config)
+            # datagen = ImageDataGenerator(rescale=1./255, rotation_range=10, horizontal_flip=True)
 
             logging.info(f"Creating generators for {self.plant_category} category...")
-            print(self.plant_category)
-            print(os.listdir(f'DataSets/{self.plant_category}'))
-            print(self.n_classes)
             class_mode = ["sparse" if self.n_classes>2 else "categorical"][0]  
-            print(class_mode)
             train_generator = datagen.flow_from_directory( f"{self.data_folder_path}/{'train'}",
                                                             target_size=self.target_size,
                                                             batch_size=self.batch_size,

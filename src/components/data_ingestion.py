@@ -62,7 +62,6 @@ class DataIngestion:
 
 from src.components.data_augmentation import PlantDataGenerator
 from src.components.model_trainer import ModelTrainer 
-# from src.utils.ModelReporter import save_model
 from src.components.model_reporter import ModelReporter
 if __name__=="__main__":
     # Testing
@@ -70,7 +69,8 @@ if __name__=="__main__":
     # data_ingestion.organize_folders() 
     # data_ingestion.split_data()
 
-    plant_list = ["Pepper","Potato","Tomato"]
+    # plant_list = ["Pepper","Potato","Tomato"]
+    plant_list = ["Tomato"]
     
     for plant in plant_list:
         data_augmentor = PlantDataGenerator(data_folder_path=f'DataSets/{plant}')
@@ -79,11 +79,9 @@ if __name__=="__main__":
 
         trainer = ModelTrainer(train_gen, val_gen)
         model_summary,training_configs,model,history = trainer.train_model()
-
         reporter = ModelReporter(plant,train_gen,val_gen,test_gen,model_summary,training_configs,model,history)
-        reporter.report_info()
-        # history = trainer.train_model(model)
+        reporter.save_model_with_report()
+        
 
-    #     # print(model.summary())  # This will print the architecture config for the specified model
 
     

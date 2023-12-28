@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Select Plant</title>
+    <link rel="stylesheet" href="ui\static\style.css">
+    
+</head>
+<body>
+    <div class="title">LeafGuard</div>
+
+    <div class="space"></div> <!-- Space between divs -->
+    
+    <div class="left-section">
+        <p class="text-line fade-in" style="animation-delay: 0.1s;font-size: 108px;">Plant Leaf Health </p><br>
+        <p class="text-line fade-in" style="animation-delay: 0.5s;font-size: 108px;">Diagnosis and</p><br>
+        <p class="text-line fade-in" style="animation-delay: 1.0s;font-size: 108px;">Treatment</p><br>
+    </div>
+    
+    
+    <div class="right-section">
+        <div class="right-section-head">
+            <h1 style="font-size: 84px; text-align: center;">Select Plant</h1>
+        </div>
+        <p style="font-size: 35px; text-align: center;">Choose the plant image and let us assist in diagnosing its leaf diseases for effective and targeted treatment.</p>
+        <p style="font-size: 35px; text-align: center;">Discover recommended treatments or solutions.</p>
+    
+        <div class="plant-selection">
+            <figure>
+                <img class="plant-image" src="ui\static\bell_pepper_plant.jpg" alt="Bell Pepper Plant" onclick="selectPlant('Pepper')">
+                <figcaption style="text-align: center;font-size: 35px;font-weight: bold;">Bell Pepper</figcaption>
+            </figure>
+            <figure>
+                <img class="plant-image" src="ui\static\potato_plant.jpg" alt="Potato Plant" onclick="selectPlant('Potato')">
+                <figcaption style="text-align: center;font-size: 35px;font-weight: bold;">Potato</figcaption>
+            </figure>
+            <figure>
+                <img class="plant-image" src="ui\static\tomato_plant.jpg" alt="Tomato Plant" onclick="selectPlant('Tomato')">
+                <figcaption style="text-align: center;font-size: 35px;font-weight: bold;">Tomato</figcaption>
+            </figure>
+        </div>
+    </div>
+    
+
+    <script>
+        function selectPlant(plant) {
+            // Redirect to the prediction page with the selected plant type
+            window.location.href = "/predict?plant=" + plant;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            fadeElements.forEach((element, index) => {
+                setTimeout(() => {
+                    element.style.opacity = 1;
+                }, (index + 1) * 500); // Delay each line by 500ms
+            });
+        });
+
+        function selectPlant(plant) {
+            // Redirect to the prediction page with the selected plant type
+            window.location.href = "/classify/" + plant;
+        }
+    </script>
+</body>
+</html>
+<!-- function selectPlant(plant) {
+    // Redirect to the classification page with the selected plant type
+    window.location.href = "/classify/" + plant;
+} -->
+

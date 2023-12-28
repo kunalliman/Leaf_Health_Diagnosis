@@ -1,0 +1,92 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+ /* Styling for the Home Page Title*/
+.title {
+    top: 50px;
+    right: 50px;
+    font-size: 100px;
+    font-weight: bold;
+    color: white;
+    background-color: green;
+    padding: 7px 15px;
+    box-sizing: border-box; 
+    z-index: 1; /* Ensure the title is above other elements */
+}
+
+ /* Styling for the left section of Home*/
+ .left-section {
+    position: absolute;
+    top: 250px;
+    left: 20px;
+    padding: 5px 15px;
+}
+
+.text-line {
+    top: 5px;
+    font-size: 70px;
+    font-weight: bold;
+    display: inline-block;
+    color: white;
+    background-color: purple;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-bottom: 2px; /* Adjust the space between lines */
+    line-height: 1;
+}
+
+
+.fade-in {
+    opacity: 0;
+    animation: fadeInAnimation 2s ease-in forwards;
+}
+
+@keyframes fadeInAnimation {
+    from {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+
+.right-section {
+    margin-top: 50px;
+    width: 45%;
+    float: right;
+    margin-right: 11%;
+    /* Add any other desired styles for the right section */
+}
+
+.right-section-head {
+    margin-bottom: 20px;
+    /* Add any other desired styles for the heading section */
+}
+
+.plant-selection {
+    display: flex;
+    justify-content: space-between;
+    /* Adjust as needed, based on your layout preferences */
+}
+
+.plant-selection figure {
+    text-align: center;
+    margin: 0;
+    /* Add any other desired styles for each figure */
+}
+
+.plant-image {
+    width: 450px;
+    height: 270px;
+    border: 1px solid #000;
+    border-radius: 10px;
+    margin: 0 45px; /* Adjust horizontal margin to control space between images */
+}
+

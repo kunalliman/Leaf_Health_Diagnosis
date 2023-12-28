@@ -7,4 +7,5 @@ matplotlib
 scikit-learn
 split-folders
 PyYAML
+python-multipart
 # -e .
