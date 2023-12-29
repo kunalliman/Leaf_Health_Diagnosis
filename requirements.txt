@@ -8,4 +8,5 @@ scikit-learn
 split-folders
 PyYAML
 python-multipart
+Flask
 # -e .
