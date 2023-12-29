@@ -1,50 +1,38 @@
-from fastapi import FastAPI, File, UploadFile
-from fastapi.responses import FileResponse
-from fastapi.staticfiles import StaticFiles
-import uvicorn
-
+from flask import Flask, render_template, request, jsonify, send_file
 import io
-from PIL import Image 
-
-
+from PIL import Image
 from src.pipeline.predict_pipeline import Operations
+
+
+app = Flask(__name__, template_folder='ui/templates', static_folder='ui/static')
+
+
 op = Operations()
 
 loaded_models = {}
-plants = ["Potato", "Pepper", "Tomato"]  
+plants = ["Potato", "Pepper", "Tomato"]
 for plant in plants:
-        model, class_names = op.select_model(plant)
-        loaded_models[plant] = {"model": model, "class_names": class_names}
+    model, class_names = op.select_model(plant)
+    loaded_models[plant] = {"model": model, "class_names": class_names}
 
-application = FastAPI()
-app = application
-app.mount("/ui/static", StaticFiles(directory="ui/static"), name="static")
+@app.route("/")
+def render_home():
+    return render_template('home.html')
 
+@app.route("/classify/<plant>")
+def render_classification(plant):
+    return render_template('classifier.html')
 
-@app.get("/")
-async def render_home():
-    html_home_page = "ui/templates/home.html"
-    return FileResponse(html_home_page)
+@app.route("/classify/<plant>/predict", methods=['POST'])
+def predict(plant):
+    if request.method == 'POST':
+        file = request.files['file']
+        contents = file.read()
+        image = Image.open(io.BytesIO(contents))
 
-@app.get("/classify/{plant}")
-async def render_classification():
-    html_classification_page = "ui/templates/classifier.html"
-    return FileResponse(html_classification_page)
-
-# UploadFile is a class from FastAPI's fastapi.UploadFile module. It represents a file uploaded via an HTTP request.
-# File(...) is a parameter type annotation used in FastAPI to specify that the parameter should receive files uploaded in the request.
-# The ellipsis (...) indicates that the file is required.
-@app.post("/classify/{plant}/predict")
-async def predict( plant: str,  file: UploadFile = File(...) ): 
-    # Read the contents of the uploaded file
-    contents = await file.read()
-
-    # Convert the file contents to an image
-    image = Image.open(io.BytesIO(contents))
-
-    result_dict = op.make_prediction(plant_name=plant, model=loaded_models[plant]["model"], class_names=loaded_models[plant]["class_names"], img=image)
-    return result_dict
-
+        result_dict = op.make_prediction(plant_name=plant, model=loaded_models[plant]["model"],
+                                         class_names=loaded_models[plant]["class_names"], img=image)
+        return jsonify(result_dict)
 
 if __name__ == "__main__":
-    uvicorn.run(app, host='localhost', port=8000)
+    app.run(host='localhost', port=8000)
